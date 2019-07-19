@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="https://cdn-hangzhou.goeasy.io/goeasy.js"></script>
+    <script type="text/javascript">
+        var goeasy = new GoEasy({
+            appkey: 'BC-a0e4f9b9b7a5460caf268df92584fe83'
+        });
+
+        goeasy.subscribe({
+            channel: 'task',
+            onMessage: function (message) {
+                //收到消息的第一行，打出日志，以这个时间作为检查的标准
+                alert('收到：' + message.content);
+            }
+        });
+
+
+        function publishMessage() {
+            var publishMessage = document.getElementById("content").value;
+            goeasy.publish({
+                //向Demo1推送消息
+                channel: 'userId',
+                message: publishMessage,
+                onFailed: function (error) {
+                    alert(error.code + " : " + error.content);
+                },
+                onSuccess: function () {
+                    document.getElementById("content").value = '';
+                }
+            });
+
+        }
+
+
+    </script>
+</head>
+<body>
+<textarea rows="3" cols="20" id="content">
+
+</textarea>
+<button id="fasong" onclick="publishMessage()">Send</button>
+
+</body>
+</html>
